@@ -1,0 +1,55 @@
+//
+// Theme Styles
+// --------------------------------------------------
+
+// Theme variables
+@import "variables.less";
+
+// Bootstrap components
+// --------------------------------
+@import "bootstrap.less";
+
+
+// Docs Components
+// --------------------------------
+
+//@import "ad.less";
+//@import "banner.less";
+//@import "header.less";
+//@import "sidebar.less";
+//@import "main-nav.less";
+//@import "footer.less";
+
+body {
+  //padding-top: 0;
+  padding-top: @body-padding;
+}
+
+/**
+ * Neutralize background color to allow our
+ * syntax highlighter theme to do the work.
+ */
+pre code {
+  background: transparent;
+}
+pre {
+  background-color: #f8f8f8;
+  margin: 20px 0 20px 5px;
+  border: 1px solid #eee;
+  border-radius: 0;
+}
+
+/**
+ * Add some padding an margins to tables
+ */
+
+@table-grid-padding: 10px;
+
+table {
+  margin-bottom: (2 * @table-grid-padding);
+}
+
+td {
+  padding: 0 @table-grid-padding (@table-grid-padding / 2) 0;
+}
+

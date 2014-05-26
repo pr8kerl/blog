@@ -1,0 +1,21 @@
+---
+title: Blog
+layout: default.hbs
+slug: blog
+---
+
+  <div class="docs-section">
+    <h1>posts</h1>
+    <div class="section-content">
+
+              <ul>
+              {{#each pages }}  
+              {{#isnt basename 'index' }}
+                <li > <a  href ="{{ filename }}" > {{ data.title }} </a > </li > 
+              {{/isnt}}
+              {{/each  }}  
+              </ul>
+
+    </div>
+  </div>
+

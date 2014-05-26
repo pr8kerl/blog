@@ -1,0 +1,41 @@
+# =============================================
+# BUILD CONFIG
+# =============================================
+
+
+# Dest config
+src:							src
+dest:             _site
+
+# public assets
+assets:           <%= site.dest %>
+
+# Data
+data:             <%= site.src %>/data
+
+# today
+date:             <%= new Date() %>
+
+# Styles
+styles:           <%= site.src %>/style
+
+# Content
+content:          <%= site.src %>/content
+
+# Extensions
+plugins:
+  - assemble-contrib-permalinks
+  - assemble-contrib-anchors
+  - assemble-contrib-toc
+
+# Templates
+templates:        <%= site.src %>/templates
+pages:            <%= site.templates %>/pages
+partials:         <%= site.templates %>/partials
+layouts:          <%= site.templates %>/layouts
+
+# site metadata
+title:						connectiv | a blog lovingly handcrafted with assemble static site generator
+description:			a blog lovingly handcrafted with assemble static site generator
+analytics: UA-XXXXX-X
+

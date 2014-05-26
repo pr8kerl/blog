@@ -1,0 +1,26 @@
+# =============================================
+# PUBLISHED
+# =============================================
+
+published:
+  linux-software-raid-rebuild:
+    title: Linux software raid rebuild
+    date: 4 Jan 2009
+    content: src/content/linux-software-raid-rebuild.md
+
+  mirror-sun-boot-disks-cheatsheet:
+    title: mirror sun boot disks
+    date: 4 Jan 2009
+    content: src/content/mirror-sun-boot-disks-cheatsheet.md
+
+# =============================================
+# NOT PUBLISHED / PLANNED / WIP
+# =============================================
+
+unpublished:
+  scope:
+    published: false
+    title: markdown
+    content: content/markdown.md
+
+
