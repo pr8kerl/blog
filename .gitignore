@@ -13,6 +13,7 @@ logs
 results
 _site/css/style.css
 _site/*html
+_site/blog
 
 npm-debug.log
 node_modules
