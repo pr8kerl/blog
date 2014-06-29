@@ -1,5 +1,5 @@
 ---
-title: Linux software raid rebuild
+title: linux software raid rebuild
 date: 4 Jan 2009
 tags:
   - linux

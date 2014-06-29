@@ -105,6 +105,17 @@ module.exports = function(grunt) {
       }
     },
 
+    // publish to github pages
+    git_deploy: {
+      github: {
+        options: {
+          url: '<%= site.ghpages %>',
+          branch: 'master'
+        },
+        src: '<%= site.dest %>'
+      },
+    },
+
     // Before generating any new files,
     // remove any previously-created files.
     clean: ['<%= site.dest %>/**/*.{html,xml}']
@@ -116,6 +127,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-git-deploy');
 
   grunt.registerTask('server', [
     'clean',

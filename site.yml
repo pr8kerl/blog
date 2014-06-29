@@ -15,6 +15,7 @@ data:             <%= site.src %>/data
 
 # today
 date:             <%= new Date() %>
+year:             <%= new Date().getFullYear() %>
 
 # Styles
 styles:           <%= site.src %>/style
@@ -35,7 +36,8 @@ partials:         <%= site.templates %>/partials
 layouts:          <%= site.templates %>/layouts
 
 # site metadata
-title:						connectiv | a blog lovingly handcrafted with assemble static site generator
+title:						a blog 
 description:			a blog lovingly handcrafted with assemble static site generator
 analytics: UA-XXXXX-X
+ghpages:          git@github.com:pr8kerl/pr8kerl.github.io.git
 
