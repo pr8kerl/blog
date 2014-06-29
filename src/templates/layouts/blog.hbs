@@ -23,16 +23,15 @@
               {{/isnt}}
               {{/each  }}  
             </ul>
-            <div id="toc">
-            </div>
           </div>
         </div>
         <div class="col-md-9" role="main">
           <h1>{{ title }}</h1>
+          <p>posted: {{date}}</p>
+          <hr>
           {{#markdown}}
           {{> body }}
           {{/markdown}}
-          <p>posted: {{date}}</p>
         </div>
       </div>
     </div>

@@ -149,10 +149,13 @@ A bit old, but nonetheless… Some notes I took when administering a Sun Cluster
  scrgadm -p -g
  scrgadm -p -j
 
-## Add a new LUN on the fly...
+## Add a new LUN on the fly
 * probe/display all fibre attached devices
+```
  cfgadm -al
+```
 * look for the WWN numbers given by storage
+```
 Ap_Id                          Type         Receptacle   Occupant     Condition
  N0.IB6                         PCI_I/O_Boa  connected    configured   ok
  N0.IB6::pci0                   io           connected    configured   ok
@@ -216,10 +219,15 @@ Ap_Id                          Type         Receptacle   Occupant     Condition
  c5::210000e08b0cf00f           unknown      connected    unconfigured unknown
  c5::210000e08b0e0622           unknown      connected    unconfigured unknown
  c5::500060e8029cbb18           disk         connected    configured   unknown  <-- and this one
+```
 * if it's not already configured then configure the disk
+```
  cfgadm -c configure c3::500060e8029cbb08 c5::500060e8029cbb18
+```
 * this one shows lun hex id's too!!
+```
  cfgadm -al -o show_FCP_dev c3::500060e8029cbb08
+```
 * else confirm with...
 
 ```
@@ -313,21 +321,30 @@ AVAILABLE DISK SELECTIONS:
  scgdevs
 ```
 
+
+If it's a new LUN size you've been given, create a new label in **/etc/format.dat**.
+
+These 100Gb ones didn't seem to work using an explicit entry in /etc/format.dat.
+
+In this case, just add the type manually thru "format".
+
+Use the Hitachi disk spec manual for values.
+
+At any rate, label and partition the disks. Make slice 7 20Mb, and add the rest of the disk into slice 0.
+
+## Remove a LUN on the fly...
+
+If you don't know the diskset/device(s) to remove, the storage boys will provide you with the WWN and LUN ID
+
+ie 500060e8029cbb08, LUN x'06'
+
+### Issue a luxadm display using the WWN
+
+All luns on that port will be displayed.
+
+Look at the "Device Address" filed to find the right lun.
+
 ```
-# if it's a new LUN size you've been given, create a new label in /etc/format.dat.
- # These 100Gb ones didn't seem to work using an explicit entry in /etc/format.dat.
- # In this case, just add the type manually thru "format".
- # Use the Hitachi disk spec manual for values.
- # At any rate, label and partition the disks. Make slice 7 20Mb, and add the rest of the disk into
- # slice 0.
-#------------------------------------------------------------
- # Remove a LUN on the fly...
- # If you don't know the diskset/device(s) to remove, the storage
- # boys will provide you with the WWN and LUN ID
- # ie 500060e8029cbb08, LUN x'06'
-# Issue a luxadm display using the WWN
- # All luns on that port will be displayed.
- # Look at the "Device Address" filed to find the right lun.
 DEVICE PROPERTIES for disk: 500060e8029cbb08
  Vendor:        HITACHI
  Product ID:        OPEN-9      -SUN
@@ -376,9 +393,15 @@ DEVICE PROPERTIES for disk: 500060e8029cbb08
  Host controller port WWN    210000e08b0e0622
  Class            primary
  State            ONLINE
-# Once you have this info, you have the disk device name like...
+```
+
+* Once you have this info, you have the disk device name like...
+```
  /dev/rdsk/c6t500060E80000000000009CBB00000444d0s2
-# Use this to find the did device name
+```
+
+* Use this to find the did device name
+```
  scdidadm -L |grep c6t500060E80000000000009CBB00000444d0
  4        mulloway:/dev/rdsk/c6t500060E80000000000009CBB00000444d0 /dev/did/rdsk/d4
  4        marlin:/dev/rdsk/c6t500060E80000000000009CBB00000444d0 /dev/did/rdsk/d4
@@ -387,16 +410,21 @@ scdidadm -L |grep c6t500060E80000000000009CBB00000444d0
  9        mulloway:/dev/rdsk/c6t500060E80000000000009CBB00000445d0 /dev/did/rdsk/d9
  9        marlin:/dev/rdsk/c6t500060E80000000000009CBB00000445d0 /dev/did/rdsk/d9
  9        manta:/dev/rdsk/c6t500060E80000000000009CBB00000445d0 /dev/did/rdsk/d9
-# So it's d4 and d9 I want to remove
- # Check for their existence in metasets
+```
+
+* So it's d4 and d9 I want to remove
+ * Check for their existence in metasets
+```
 metaset|grep d9
-# If there's any output, you'd better take a close look at the whole output
- # to find which metaset it belongs to.
- # If it belongs to a metaset, remove all filesystems partitions etc.
- # Finally delete the metaset.
-# If you have HDS SCSI reserve errors when trying to deallocate the lun...
-# Check for SCSI3 reserves using the undocumented utility /usr/cluster/lib/sc/reserve.
- # Use either the did or the OS device file.
+```
+ * If there's any output, you'd better take a close look at the whole output to find which metaset it belongs to. If it belongs to a metaset, remove all filesystems partitions etc.
+ * Finally delete the metaset.
+ * If you have HDS SCSI reserve errors when trying to deallocate the lun...
+
+   Check for SCSI3 reserves using the undocumented utility /usr/cluster/lib/sc/reserve.
+
+   Use either the did or the OS device file.
+```
  root@marlin:/usr/cluster/lib/sc
  $ ./reserve -c inkeys -z /dev/did/rdsk/d9s2
  Reservation keys(3):
@@ -436,24 +464,39 @@ root@marlin:/usr/cluster/lib/sc
  $ ./reserve -c inkeys -z /dev/rdsk/c6t500060E80000000000009CBB00000445d0s2
  Reservation keys(0):
  root@marlin:/usr/cluster/lib/sc
-# run devfsadm to remove device files
+```
+* run devfsadm to remove device files
+```
  devfsadm -C -c disk
-# clean up the did devices
+```
+* clean up the did devices
+```
  scdidadm -C
-#------------------------------------------------------------
- # create a new diskset
-# create metaset and mediators
+```
+
+## create a new diskset
+
+* create metaset and mediators
+```
  metaset -s ds04 -a -h manta mulloway marlin
  metaset -s ds04 -a -m mulloway manta
-# add disk to the metaset
+```
+* add disk to the metaset
+```
  metaset -s ds04 -a /dev/did/rdsk/d21 /dev/did/rdsk/d22
-# check status
+```
+* check status
+```
  metaset -s ds04
  metadb -s ds04
  medstat -s ds04
-# create the first concat
+```
+* create the first concat
+```
  metainit -s ds04 d0 2 1 /dev/did/rdsk/d21s0 1 /dev/did/rdsk/d22s0
-# create soft partitions
+```
+* create soft partitions
+```
  root@manta:init.d
  # metainit -s ds04 d1 -p d0 10g
  d1: Soft Partition is setup
@@ -462,20 +505,32 @@ root@marlin:/usr/cluster/lib/sc
  d2: Soft Partition is setup
  root@manta:init.d
  #
-# create default ufs filesystems
+```
+* create default ufs filesystems
+```
  newfs /dev/md/ds04/rdsk/d1
  newfs /dev/md/ds04/rdsk/d2
-# check required filesystem settings using...
+```
+* check required filesystem settings using...
+```
  # mkfs -m /dev/md/ds04/rdsk/d1
  mkfs -F ufs -o nsect=120,ntrack=56,bsize=8192,fragsize=1024,cgsize=16,free=1,rps=166,nbpi=8239,opt=t,apc=0,gap=0,nrpos=8,maxcontig=16 /dev/md/ds04/rdsk/d1 20971520
-# create resource group
+```
+* create resource group
+```
  scrgadm -a -g super1 -h manta,mulloway,marlin -y RG_description="Summit Production"
-# create StoragePlus resource
+```
+* create StoragePlus resource
+```
  scrgadm -a -j super1-ds04 -t SUNW.HAStoragePlus -g super1 \
  -x FileSystemMountPoints=/opt/smt,/opt/oraclest \
  -x AffinityOn=true
-# create logical hostname resource
+```
+* create logical hostname resource
+```
  scrgadm -a -L  -g super1 -j super1-ip -l super1
-# create the super1 apache application resource
+```
+* create the super1 apache application resource
+```
  scrgadm -a -j super1-apache -t EUM.super1 -g super1 -y Resource_dependencies=super1-ds04 -x Eum_admin_dir=/opt/smt/admin/bin
 ```
