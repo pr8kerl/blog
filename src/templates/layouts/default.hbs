@@ -11,8 +11,24 @@
     {{!-- main nav --}}
     {{> navbar-fixed-top }}
 
-    <div class="container">
-      {{> body }}
+    {{!-- Content --}}
+    <div class="container docs-container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="sidebar hidden-print" data-spy="affix" role="complementary">
+            <ul class="nav sidenav">
+              {{#each pages }}  
+              {{#isnt basename 'index' }}
+                <li > <a  href ="{{ filename }}" > {{ data.title }} </a > </li > 
+              {{/isnt}}
+              {{/each  }}  
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9" role="main">
+          {{> body }}
+        </div>
+      </div>
     </div>
 
     {{!-- Footer --}}
@@ -20,6 +36,6 @@
 
     {{!-- JavaScript and analytics only. --}}
     {{> javascripts }}
+
   </body>
 </html>
-
