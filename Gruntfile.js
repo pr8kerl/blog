@@ -26,6 +26,7 @@ module.exports = function(grunt) {
     // Project metadata
     pkg: grunt.file.readJSON('package.json'),
     site: grunt.file.readYAML('site.yml'),
+    aws: grunt.file.readJSON("../aws-grunt.json"),
 
     watch: {
       assemble: {
@@ -116,6 +117,21 @@ module.exports = function(grunt) {
       },
     },
 
+    s3: {
+      options: {
+        accessKeyId: "<%= aws.accessKeyId %>",
+        secretAccessKey: "<%= aws.secretAccessKey %>",
+        access: "public-read",
+        region: "ap-southeast-2",
+        bucket: "blick.io"
+      },
+      build: {
+        cwd: "_site/",
+        src: "**"
+      }
+    },
+
+
     // Before generating any new files,
     // remove any previously-created files.
     clean: ['<%= site.dest %>/**/*.{html,xml}']
@@ -128,6 +144,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-git-deploy');
+  grunt.loadNpmTasks('grunt-aws');
 
   grunt.registerTask('server', [
     'clean',
