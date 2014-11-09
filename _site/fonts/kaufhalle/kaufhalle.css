@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'kaufhalleRegular';
+    src: url('kaufhalle.eot');
+    src: url('kaufhalle.eot') format('embedded-opentype'),
+         url('kaufhalle.woff2') format('woff2'),
+         url('kaufhalle.woff') format('woff'),
+         url('kaufhalle.ttf') format('truetype'),
+         url('kaufhalle.svg#kaufhalleRegular') format('svg');
+}

@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'ErikaOrmigRegular';
+    src: url('erikaormig.eot');
+    src: url('erikaormig.eot') format('embedded-opentype'),
+         url('erikaormig.woff2') format('woff2'),
+         url('erikaormig.woff') format('woff'),
+         url('erikaormig.ttf') format('truetype'),
+         url('erikaormig.svg#ErikaOrmigRegular') format('svg');
+}

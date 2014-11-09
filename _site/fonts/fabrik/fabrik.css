@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'FabrikNormal';
+    src: url('fabrik.eot');
+    src: url('fabrik.eot') format('embedded-opentype'),
+         url('fabrik.woff2') format('woff2'),
+         url('fabrik.woff') format('woff'),
+         url('fabrik.ttf') format('truetype'),
+         url('fabrik.svg#FabrikNormal') format('svg');
+}

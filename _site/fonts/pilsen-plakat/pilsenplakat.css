@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'PilsenPlakatRegular';
+    src: url('pilsenplakat.eot');
+    src: url('pilsenplakat.eot') format('embedded-opentype'),
+         url('pilsenplakat.woff2') format('woff2'),
+         url('pilsenplakat.woff') format('woff'),
+         url('pilsenplakat.ttf') format('truetype'),
+         url('pilsenplakat.svg#PilsenPlakatRegular') format('svg');
+}

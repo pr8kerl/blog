@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'AlteDIN1451MittelschriftRegular';
+    src: url('din1451alt.eot');
+    src: url('din1451alt.eot') format('embedded-opentype'),
+         url('din1451alt.woff2') format('woff2'),
+         url('din1451alt.woff') format('woff'),
+         url('din1451alt.ttf') format('truetype'),
+         url('din1451alt.svg#AlteDIN1451MittelschriftRegular') format('svg');
+}

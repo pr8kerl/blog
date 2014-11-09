@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'EricaTypeRegular';
+    src: url('erikatype.eot');
+    src: url('erikatype.eot') format('embedded-opentype'),
+         url('erikatype.woff2') format('woff2'),
+         url('erikatype.woff') format('woff'),
+         url('erikatype.ttf') format('truetype'),
+         url('erikatype.svg#EricaTypeRegular') format('svg');
+}
