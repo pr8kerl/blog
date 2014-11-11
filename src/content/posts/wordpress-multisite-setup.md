@@ -6,7 +6,7 @@ tags:
   - multisite
 ---
 
-# wordpress multisite configuration with subfolders AND unique domain names
+## wordpress multisite configuration with subfolders AND unique domain names
 
 It's easy. Here's how.
 
